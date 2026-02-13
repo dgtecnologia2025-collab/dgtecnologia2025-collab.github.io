@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TechDev Solutions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* CONFIGURAÇÕES GERAIS */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#0a0f1c;color:white;overflow-x:hidden}
+
+/* LOGO FIXA */
+.logo-fixa{
+  position: fixed;
+  top: 5px;
+  left: 20px;
+  width: 200px;
+  height: auto;
+  z-index: 2001;
+  pointer-events: none;
+}
+
+/* NAV */
+nav{
+  position:fixed;width:100%;top:0;
+  background:rgba(0,0,0,.6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  display:flex;justify-content:space-between;
+  padding:50px 10px;
+  z-index: 2000;
+}
+nav div{ margin-left: 250px; }
+nav a{color:white;text-decoration:none;margin-left:15px}
+nav a:hover{color:#00c3ff}
+
+/* HERO AJUSTADO COM AFASTAMENTO DO TOPO */
+.hero {
+  height: 67vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #bec4d3;
+  position: relative;
+  
+  /* ADICIONE ESTA LINHA ABAIXO */
+  padding-top: 100px; 
+}
+
+.hero img.apresentacao {
+  width: 100%;
+  height: 100%;
+  /* Se você quiser que a imagem apareça inteira agora que afastou, 
+     use 'contain'. Se quiser que preencha tudo, mantenha 'cover'. */
+  object-fit: contain; 
+  display: block;
+}
+
+/* Caso queira o texto sobre a imagem, o h2 usaria estas propriedades */
+.hero h2 {
+  position: absolute;
+  z-index: 2;
+  font-size: 3.5rem;
+  background: linear-gradient(90deg, #00c3ff, #0066ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* SECTIONS */
+section{padding:90px 10%}
+.title{text-align:center;font-size:2rem;margin-bottom:40px}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+
+/* CARD */
+.card{
+  background:#111a2e;
+  padding:20px;border-radius:15px;
+  transition:.4s;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 20px #00c3ff44;
+}
+.card h3{color:#00c3ff;margin:10px 0}
+.card a{color:inherit; text-decoration: none;}
+
+/* CAROUSEL PADRÃO */
+.carousel{
+  position:relative;height:160px;
+  overflow:hidden;border-radius:10px;
+  background: #000;
+}
+.carousel img{
+  width:100%;height:100%;
+  object-fit:cover;display:none;
+}
+.carousel img.active{display:block}
+
+/* ESTILO PARA ELOGIOS (IMAGENS INTEIRAS E MINIMIZADAS) */
+.mini-full-img {
+  background: #000;
+}
+.mini-full-img img {
+  object-fit: contain !important; /* Mostra o print/elogio sem cortar nada */
+  padding: 15px;
+}
+
+/* BOTÕES DOS CARROSSEIS */
+.car-btn{
+  position:absolute;top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.6);
+  border:none;color:white;
+  padding:5px 10px;
+  cursor:pointer;font-size:18px;
+  z-index: 5;
+}
+.prev{left:5px}
+.next{right:5px}
+
+/* BOTÃO GERAL (ORÇAMENTO/COMPRAR) */
+.btn{
+  margin-top:auto; /* Joga o botão para o fim do card */
+  padding:12px 25px;
+  border:none;border-radius:25px;
+  background:linear-gradient(90deg,#00c3ff,#0066ff);
+  color:white;cursor:pointer;
+  font-weight: bold;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.9);
+  justify-content:center;
+  align-items:center;
+  z-index:3000;
+}
+.modal img{
+  width: auto;
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+.close{
+  position:absolute;top:20px;right:25px;
+  font-size:32px;color:white;background:none;border:none;cursor:pointer;
+}
+.modal button.nav{
+  position:absolute;top:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.1);
+  border:none;color:white;
+  font-size:40px;padding:20px;
+  cursor:pointer;border-radius: 50%;
+}
+.mprev{left:2%}
+.mnext{right:2%}
+
+/* FOOTER */
+footer{text-align:center;padding:30px;background:#020617;color:#aaa;}
+
+/* RESPONSIVIDADE */
+@media(max-width:768px){
+  .hero h2{font-size:2.2rem}
+  nav div { margin-left: 0; display: flex; flex-wrap: wrap; justify-content: center; }
+  section { padding: 60px 5%; }
+}
+</style>
+</head>
+
+<body>
+<img src="logoDG.png" class="logo-fixa" alt="">
+<nav>
+<div>
+<a href="#services">Serviços realizados</a>
+<a href="#news">Notícias</a>
+<a href="#testimonials">Nossos clientes</a>
+<a href="#shop">Loja</a>
+</div>
+</nav>
+
+<div class="hero">
+  <a href="https://wa.me/5516993643272">
+  <img src="apresentando.png" class="apresentacao" alt="Apresentação DG Tecnologia">
+  </a>
+</div>
+
+<section id="services">
+<h2 class="title">Serviços</h2>
+<div class="grid">
+
+    <div class="card">
+        <div class="carousel">
+            <img src="Infovip1.png" class="active">
+            <img src="Infovip2.png">
+            <img src="Infovip3.png">
+            <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3><a href="https://infoviptecnologia.com.br">Infovip Tecnologia</a></h3>
+        <p>Landing page alinhada à identidade visual.</p>
+    </div>
+
+    <div class="card">
+        <div class="carousel">
+            <img src="CPCalhas1.png" class="active">
+            <img src="CPCalhas2.png">
+            <img src="CPCalhas3.png">
+            <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3><a href="https://admcpcalhas.github.io">CPcalhas</a></h3>
+        <p>Landing page alinhada à identidade visual.</p>
+    </div>
+
+    <div class="card">
+        <div class="carousel">
+            <img src="Flugo1.png" class="active">
+            <img src="Flugo2.png">
+            <img src="Flugo3.png">
+            <img src="Flugo4.png">
+            <img src="Flugo5.png">
+            <img src="Flugo6.png">
+            <img src="Flugo7.png">
+            <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3><a href="https://flugo.com.br">Flugo</a></h3>
+        <p>Sistema de controle e alteração e adição de funcionarios.</p>
+    </div>
+
+    <div class="card">
+        <div class="carousel">
+            <img src="Dub Dramas1.png" class="active">
+            <img src="Dub Dramas2.png">
+            <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3><a href="https://play.google.com/store/apps/details?id=com.dubdramas.app">Dub Dramas</a></h3>
+        <p>Aplicativo e site de streming.</p>
+    </div>
+
+    <div class="card">
+        <div class="carousel">
+            <img src="Sistema de Emails.png" class="active">
+            <img src="Sistema de Emails.png">
+            <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3><a href="https://github.com/garpP/sistema-de-emails-pra-API">Confidencial</a></h3>
+        <p>Sistema de emails.</p>
+    </div>
+
+    </div>
+</section>
+
+<hr>
+
+<section id="news">
+<h2 class="title">Notícias</h2>
+<div class="grid">
+    <div class="card news">
+        <div class="carousel news-carousel">
+            <img src="Noticia1-13-02-2026.png" class="active" style="object-fit:contain;">
+            <img src="Noticia2-13-02-2026.png" style="object-fit:contain;">
+        </div>
+        <h3>Promoção de inverno EPIC</h3>
+        <p><a href="https://www.tiktok.com/@dgtecnologia0/photo/7606043952105393429?is_from_webapp=1&sender_device=pc&web_id=7557033691944764940">Clique para ver detalhes</a></p>
+    </div>
+</div>
+</section>
+
+<hr>
+
+<section id="testimonials">
+<h2 class="title">Elogios</h2>
+<div class="grid">
+    
+    <div class="card">
+        <div class="carousel mini-full-img testimonial-auto">
+            <img src="elogio2.png" class="active">
+            <img src="elogio2.png"> <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3>CPCalhas</h3>
+        <p>Feedback positivo sobre agilidade.</p>
+    </div>
+
+    <div class="card">
+        <div class="carousel mini-full-img testimonial-auto">
+            <img src="elogio1.png" class="active">
+            <img src="elogio1.png">
+            <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3>Adriano</h3>
+        <p>Excelente suporte agrícola.</p>
+    </div>
+
+    <div class="card">
+        <div class="carousel mini-full-img testimonial-auto">
+            <img src="elogio3.png" class="active">
+            <img src="elogio3.png">
+            <button class="car-btn prev">‹</button>
+            <button class="car-btn next">›</button>
+        </div>
+        <h3>Rodolfo</h3>
+        <p>Soluções precisas e rápidas.</p>
+    </div>
+
+</div>
+</section>
+
+<hr>
+
+<section id="shop">
+<h2 class="title">Produtos</h2>
+<div class="grid">
+    <div class="card">
+        <div class="carousel">
+            <img src="https://picsum.photos/400/200?31" class="active">
+        </div>
+        <h3>SSD 1TB</h3>
+        <p>R$399</p>
+        <button class="btn">Comprar</button>
+    </div>
+</div>
+</section>
+
+<footer>© DGtecnologia</footer>
+
+<div class="modal" id="modal">
+    <button class="close" id="closeModal">✕</button>
+    <button class="nav mprev">‹</button>
+    <img id="modalImg" src="">
+    <button class="nav mnext">›</button>
+</div>
+
+<script>
+/* LÓGICA DE TODOS OS CARROSSEIS (SETAS) */
+document.querySelectorAll(".carousel").forEach(car=>{
+    let imgs = car.querySelectorAll("img");
+    let i = 0;
+    const next = car.querySelector(".next");
+    const prev = car.querySelector(".prev");
+
+    if(next && prev){
+        next.onclick=(e)=>{
+            e.stopPropagation();
+            imgs[i].classList.remove("active");
+            i=(i+1)%imgs.length;
+            imgs[i].classList.add("active");
+        };
+        prev.onclick=(e)=>{
+            e.stopPropagation();
+            imgs[i].classList.remove("active");
+            i=(i-1+imgs.length)%imgs.length;
+            imgs[i].classList.add("active");
+        };
+    }
+
+    /* AUTO-PLAY PARA TESTIMONIALS E NEWS */
+    if(car.classList.contains('testimonial-auto') || car.classList.contains('news-carousel')){
+        setInterval(()=>{
+            imgs[i].classList.remove("active");
+            i=(i+1)%imgs.length;
+            imgs[i].classList.add("active");
+        }, 3000); // Gira a cada 3 segundos
+    }
+});
+
+/* MODAL NOTÍCIAS */
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
+
+document.querySelectorAll(".news").forEach(card => {
+    card.onclick = () => {
+        const activeImg = card.querySelector("img.active");
+        modalImg.src = activeImg.src;
+        modal.style.display = "flex";
+    };
+});
+
+function fecharModal(){ modal.style.display="none"; }
+document.getElementById("closeModal").onclick = fecharModal;
+modal.onclick = (e) => { if(e.target===modal) fecharModal(); };
+
+/* SCROLL SUAVE */
+document.querySelectorAll("nav a").forEach(a=>{
+    a.onclick=e=>{
+        e.preventDefault();
+        document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+    };
+});
+</script>
+
+</body>
+</html>
