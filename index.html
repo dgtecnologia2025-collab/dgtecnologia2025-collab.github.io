@@ -331,89 +331,118 @@ footer{text-align:center;padding:30px;background:#020617;color:#aaa;}
 <hr>
 
 <section id="shop">
-<h2 class="title">Produtos</h2>
-<div class="grid">
-    <div class="card">
-        <div class="carousel">
-            <img src="produto1Elogios.png" class="active">
-            <img src="image.png" class="active">
-            <img src="fone2.png" class="active">
-            <img src="fone3.png" class="active">
+    <h2 class="title">Produtos</h2>
+    <div class="grid">
+        <div class="card product-card"> <div class="carousel product-auto"> 
+                <img src="produto1Elogios.png" class="active">
+                <img src="image.png">
+                <img src="fone2.png">
+                <img src="fone3.png">
+                <button class="car-btn prev">‹</button>
+                <button class="car-btn next">›</button>
+            </div>
+            <h3>🔍 Cole este ID no buscador do Mercado Livre: X37LPY-C4A4 <br> 
+                🔗 Ou acesse este link: <a href="https://mercadolivre.com/sec/1tNo4iD" target="_blank">https://mercadolivre.com/sec/1tNo4iD</a>
+            </h3>
+            <p>R$52,84 por tempo limitado</p>
+            <button class="btn">Fone De Ouvido Bluetooth Kaidi Kd-770 À Prova Dágua</button>
         </div>
-        <h3>🔍 Cole este ID no buscador do Mercado Livre: X37LPY-C4A4 <br> 🔗 Ou acesse este link: <a href="https://mercadolivre.com/sec/1tNo4iD">https://mercadolivre.com/sec/1tNo4iD</a></h3>
-        <p>R$52,84 por tempo limitado</p>
-        <button class="btn">Fone De Ouvido Bluetooth Kaidi Kd-770 À Prova Dágua</button>
     </div>
-</div>
 </section>
 
 <footer>© DGtecnologia</footer>
 
 <div class="modal" id="modal">
     <button class="close" id="closeModal">✕</button>
-    <button class="nav mprev">‹</button>
+    <button class="nav mprev" id="modalPrev">‹</button>
     <img id="modalImg" src="">
-    <button class="nav mnext">›</button>
+    <button class="nav mnext" id="modalNext">›</button>
 </div>
 
 <script>
-/* LÓGICA DE TODOS OS CARROSSEIS (SETAS) */
-document.querySelectorAll(".carousel").forEach(car=>{
+/* LÓGICA DE TODOS OS CARROSSEIS (SETAS E AUTO-PLAY) */
+document.querySelectorAll(".carousel").forEach(car => {
     let imgs = car.querySelectorAll("img");
     let i = 0;
     const next = car.querySelector(".next");
     const prev = car.querySelector(".prev");
 
-    if(next && prev){
-        next.onclick=(e)=>{
-            e.stopPropagation();
-            imgs[i].classList.remove("active");
-            i=(i+1)%imgs.length;
-            imgs[i].classList.add("active");
-        };
-        prev.onclick=(e)=>{
-            e.stopPropagation();
-            imgs[i].classList.remove("active");
-            i=(i-1+imgs.length)%imgs.length;
-            imgs[i].classList.add("active");
-        };
+    function moveNext() {
+        imgs[i].classList.remove("active");
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add("active");
     }
 
-    /* AUTO-PLAY PARA TESTIMONIALS E NEWS */
-    if(car.classList.contains('testimonial-auto') || car.classList.contains('news-carousel')){
-        setInterval(()=>{
-            imgs[i].classList.remove("active");
-            i=(i+1)%imgs.length;
-            imgs[i].classList.add("active");
-        }, 3000); // Gira a cada 3 segundos
+    function movePrev() {
+        imgs[i].classList.remove("active");
+        i = (i - 1 + imgs.length) % imgs.length;
+        imgs[i].classList.add("active");
+    }
+
+    if (next && prev) {
+        next.onclick = (e) => { e.stopPropagation(); moveNext(); };
+        prev.onclick = (e) => { e.stopPropagation(); movePrev(); };
+    }
+
+    /* AUTO-PLAY: Agora inclui 'product-auto' */
+    if (car.classList.contains('testimonial-auto') || 
+        car.classList.contains('news-carousel') || 
+        car.classList.contains('product-auto')) {
+        setInterval(moveNext, 3000); 
     }
 });
 
-/* MODAL NOTÍCIAS */
+/* LÓGICA DO MODAL (AMPLIAÇÃO COM NAVEGAÇÃO) */
 const modal = document.getElementById("modal");
 const modalImg = document.getElementById("modalImg");
+let currentImages = []; // Array de imagens do card clicado
+let currentIndex = 0;   // Índice da imagem atual no modal
 
-document.querySelectorAll(".news").forEach(card => {
+// Seleciona Cards de Notícias e Produtos para permitir zoom
+document.querySelectorAll(".news, .product-card").forEach(card => {
     card.onclick = () => {
+        const imgsInCard = card.querySelectorAll(".carousel img");
+        currentImages = Array.from(imgsInCard).map(img => img.src);
+        
+        // Começa pela imagem que está visível (active) no momento do clique
         const activeImg = card.querySelector("img.active");
-        modalImg.src = activeImg.src;
+        currentIndex = currentImages.indexOf(activeImg.src);
+        
+        updateModal();
         modal.style.display = "flex";
     };
 });
 
-function fecharModal(){ modal.style.display="none"; }
+function updateModal() {
+    modalImg.src = currentImages[currentIndex];
+}
+
+// Botões do Modal
+document.getElementById("modalNext").onclick = (e) => {
+    e.stopPropagation();
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    updateModal();
+};
+
+document.getElementById("modalPrev").onclick = (e) => {
+    e.stopPropagation();
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    updateModal();
+};
+
+function fecharModal() { modal.style.display = "none"; }
 document.getElementById("closeModal").onclick = fecharModal;
-modal.onclick = (e) => { if(e.target===modal) fecharModal(); };
+modal.onclick = (e) => { if (e.target === modal) fecharModal(); };
 
 /* SCROLL SUAVE */
-document.querySelectorAll("nav a").forEach(a=>{
-    a.onclick=e=>{
+document.querySelectorAll("nav a").forEach(a => {
+    a.onclick = e => {
         e.preventDefault();
-        document.querySelector(a.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+        const target = document.querySelector(a.getAttribute("href"));
+        if(target) target.scrollIntoView({ behavior: "smooth" });
     };
 });
 </script>
 
 </body>
-
 </html>
