@@ -182,6 +182,14 @@ footer{text-align:center;padding:30px;background:#020617;color:#aaa;}
   nav div { margin-left: 0; display: flex; flex-wrap: wrap; justify-content: center; }
   section { padding: 60px 5%; }
 }
+
+/* Garante que imagens em carrosséis de produto fiquem inteiras */
+.product-auto img {
+    object-fit: contain !important;
+    padding: 10px; /* Pequeno respiro para não encostar nas bordas */
+    background: #000; /* Fundo preto para preencher sobras da imagem */
+}
+
 </style>
 </head>
 
@@ -334,20 +342,43 @@ footer{text-align:center;padding:30px;background:#020617;color:#aaa;}
     <h2 class="title">Produtos</h2>
     <div class="grid">
         <div class="card product-card"> <div class="carousel product-auto"> 
+          <div class="carousel product-auto mini-full-img">
                 <img src="produto1Elogios.png" class="active">
                 <img src="image.png">
                 <img src="fone2.png">
                 <img src="fone3.png">
                 <button class="car-btn prev">‹</button>
                 <button class="car-btn next">›</button>
+          </div>
             </div>
             <h3>🔍 Cole este ID no buscador do Mercado Livre: X37LPY-C4A4 <br> 
                 🔗 Ou acesse este link: <a href="https://mercadolivre.com/sec/1tNo4iD" target="_blank">https://mercadolivre.com/sec/1tNo4iD</a>
             </h3>
             <p>R$52,84 por tempo limitado</p>
-            <button class="btn">Fone De Ouvido Bluetooth Kaidi Kd-770 À Prova Dágua</button>
+            <button class="btn"><a href="https://mercadolivre.com/sec/1tNo4iD" target="_blank">Fone De Ouvido Bluetooth Kaidi Kd-770 À Prova Dágua</a></button>
         </div>
+
+              <div class="card product-card"> <div class="carousel product-auto">
+                <div class="carousel product-auto mini-full-img">
+                <img src="projetor1.png" class="active">
+                <img src="projetor2.png">
+                <img src="projetor3.png">
+                <img src="projetor4.png">
+                <button class="car-btn prev">‹</button>
+                <button class="car-btn next">›</button>
+            </div>
+            </div>
+            <h3>🔍 Cole este ID no buscador do Mercado Livre: X37LPY-PFWH <br> 
+                🔗 Ou acesse este link: <a href="https://mercadolivre.com/sec/12Mweqx" target="_blank">https://mercadolivre.com/sec/12Mweqx</a>
+            </h3>
+            <p>R$179,99 por tempo limitado</p>
+            <button class="btn"><a href="https://mercadolivre.com/sec/12Mweqx" target="_blank">Projetor Smart Portátil Full Hd 4k Android 11 Wi-fi Bluetooth</a></button>
+        </div>
+      
     </div>
+
+
+  
 </section>
 
 <footer>© DGtecnologia</footer>
@@ -446,3 +477,4 @@ document.querySelectorAll("nav a").forEach(a => {
 
 </body>
 </html>
+
